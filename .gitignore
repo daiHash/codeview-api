@@ -2,6 +2,8 @@
 /dist
 /node_modules
 
+/src/config/dev-keys.ts
+
 # Logs
 logs
 *.log
