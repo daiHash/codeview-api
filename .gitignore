@@ -2,8 +2,6 @@
 /dist
 /node_modules
 
-/src/config/dev-keys.ts
-
 # Logs
 logs
 *.log
@@ -34,3 +32,6 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# env vars
+.env
