@@ -1,6 +1,7 @@
 import { PassportStrategy } from '@nestjs/passport'
 import { Strategy, VerifyCallback, Profile } from 'passport-google-oauth20'
-import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
+import { UserData } from './user.interface'
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
@@ -19,15 +20,13 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     profile: Profile,
     done: VerifyCallback
   ): Promise<void> {
-    const { name, emails, photos, username, displayName } = profile
-    const user = {
-      email: emails[0].value,
-      firstName: name.givenName,
-      lastName: name.familyName,
+    const { photos, username, displayName, id: googleID } = profile
+
+    const user: UserData = {
       username: username ?? displayName,
-      picture: photos[0].value,
+      avatarUrl: photos[0].value,
       accessToken,
-      refreshToken
+      googleID
     }
     done(null, user)
   }

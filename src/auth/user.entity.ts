@@ -7,7 +7,7 @@ import {
 } from 'typeorm'
 
 @Entity()
-@Unique(['username'])
+@Unique(['googleID'])
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number

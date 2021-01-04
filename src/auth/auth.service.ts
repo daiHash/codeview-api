@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { UserData } from './user.interface'
+import { UserRepository } from './user.repository'
 
 @Injectable()
 export class AuthService {
-  signIn(req, res) {
+  constructor(
+    @InjectRepository(UserRepository) private userRepository: UserRepository
+  ) {}
+
+  signIn(user: UserData) {
+    return this.userRepository.signIn(user)
     // TODO: Handle after signIn
-    if (!req.user) {
-      return 'No user from google'
-    }
-    // res.redirect('/')
-    res.json({
-      message: 'User Info from Google',
-      user: req.user
-    })
   }
 }
