@@ -2,7 +2,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Save any code snippet that you have used and keep and access it easily as a memo.
 
 ## Installation
 
