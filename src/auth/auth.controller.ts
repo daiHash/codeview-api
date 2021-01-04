@@ -15,7 +15,8 @@ export class AuthController {
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
-  async googleCallback(@Req() req: Request<{ user: UserData }>) {
-    return req.user && this.authService.signIn(req.user)
+  async googleCallback(@Req() req: Request) {
+    // TODO: Fix type of req
+    return req.user && this.authService.signIn(req.user as UserData)
   }
 }
