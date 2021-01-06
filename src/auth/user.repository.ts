@@ -2,12 +2,13 @@ import { ConflictException, InternalServerErrorException } from '@nestjs/common'
 import { EntityRepository, Repository } from 'typeorm'
 import { User } from './user.entity'
 import { UserData } from './user.interface'
+import { Request } from 'express'
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  async signIn(user: UserData): Promise<void> {
-    const { username, avatarUrl, googleID } = user
-    const isUser = await this.findOne({ googleID: user.googleID })
+  async signIn(req: Request): Promise<User | UserData> {
+    const { username, avatarUrl, googleID } = req.user as UserData
+    const isUser = await this.findOne({ googleID })
 
     if (!isUser) {
       const newUser = new User()
@@ -16,7 +17,7 @@ export class UserRepository extends Repository<User> {
       newUser.avatarUrl = avatarUrl
       try {
         await newUser.save()
-        return
+        return newUser
       } catch (error) {
         if (error.code === '23505') {
           // Duplicate user key
@@ -27,5 +28,7 @@ export class UserRepository extends Repository<User> {
         }
       }
     }
+
+    return req.user as UserData
   }
 }

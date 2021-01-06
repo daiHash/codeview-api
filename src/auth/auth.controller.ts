@@ -1,22 +1,29 @@
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common'
-import { AuthGuard } from '@nestjs/passport'
+import { Controller, Get, Req, UseGuards } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { Request } from 'express'
-import { UserData } from './user.interface'
+import { AuthenticatedGuard } from 'src/common/guards/authenticated.guard'
+import { GoogleAuthGuard } from 'src/common/guards/googleauth.guard'
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Get('google')
-  @UseGuards(AuthGuard('google'))
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  async signIn() {}
+  @UseGuards(GoogleAuthGuard)
+  async signIn() {
+    return
+  }
 
   @Get('google/callback')
-  @UseGuards(AuthGuard('google'))
+  @UseGuards(GoogleAuthGuard)
   async googleCallback(@Req() req: Request) {
-    // TODO: Fix type of req
-    return req.user && this.authService.signIn(req.user as UserData)
+    return this.authService.signIn(req)
+  }
+
+  // test endpoint for session test
+  @UseGuards(AuthenticatedGuard)
+  @Get('/profile')
+  getProfile(@Req() req: Request) {
+    return req.user
   }
 }
