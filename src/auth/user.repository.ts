@@ -6,11 +6,12 @@ import { Request, Response } from 'express'
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  async signIn(req: Request, res: Response): Promise<User | UserData> {
-    const CLIENT_BASE_URL =
-      process.env.NODE_ENV !== 'production'
-        ? 'http://localhost:8080'
-        : 'https://TODO:Addprodurl'
+  CLIENT_BASE_URL =
+    process.env.NODE_ENV !== 'production'
+      ? 'http://localhost:8080'
+      : 'https://TODO:Addprodurl'
+
+  async signIn(req: Request, res: Response): Promise<void> {
     const { username, avatarUrl, googleID } = req.user as UserData
     const isUser = await this.findOne({ googleID })
 
@@ -21,7 +22,7 @@ export class UserRepository extends Repository<User> {
       newUser.avatarUrl = avatarUrl
       try {
         await newUser.save()
-        return newUser
+        res.redirect(this.CLIENT_BASE_URL)
       } catch (error) {
         if (error.code === '23505') {
           // Duplicate user key
@@ -33,6 +34,11 @@ export class UserRepository extends Repository<User> {
       }
     }
 
-    res.redirect(CLIENT_BASE_URL)
+    res.redirect(this.CLIENT_BASE_URL)
+  }
+
+  async logOut(req: Request, res: Response): Promise<void> {
+    req.logOut()
+    res.redirect(this.CLIENT_BASE_URL)
   }
 }

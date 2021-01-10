@@ -8,7 +8,11 @@ export class AuthService {
     @InjectRepository(UserRepository) private userRepository: UserRepository
   ) {}
 
-  signIn(req: Request, res: Response) {
+  signIn(req: Request, res: Response): Promise<void> {
     return this.userRepository.signIn(req, res)
+  }
+
+  logOut(req: Request, res: Response): Promise<void> {
+    return this.userRepository.logOut(req, res)
   }
 }
