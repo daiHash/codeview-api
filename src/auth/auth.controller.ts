@@ -1,7 +1,7 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common'
+import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common'
 import { AuthService } from './auth.service'
-import { Request } from 'express'
-import { AuthenticatedGuard } from 'src/common/guards/authenticated.guard'
+import { Request, Response } from 'express'
+// import { AuthenticatedGuard } from 'src/common/guards/authenticated.guard'
 import { GoogleAuthGuard } from 'src/common/guards/googleauth.guard'
 
 @Controller('auth')
@@ -16,14 +16,12 @@ export class AuthController {
 
   @Get('google/callback')
   @UseGuards(GoogleAuthGuard)
-  async googleCallback(@Req() req: Request) {
-    return this.authService.signIn(req)
+  async googleCallback(@Req() req: Request, @Res() res: Response) {
+    return this.authService.signIn(req, res)
   }
 
-  // test endpoint for session test
-  @UseGuards(AuthenticatedGuard)
-  @Get('/profile')
+  @Get('/current_user')
   getProfile(@Req() req: Request) {
-    return req.user
+    return { isCurrentUser: !!req.user }
   }
 }

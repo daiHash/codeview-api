@@ -2,11 +2,15 @@ import { ConflictException, InternalServerErrorException } from '@nestjs/common'
 import { EntityRepository, Repository } from 'typeorm'
 import { User } from './user.entity'
 import { UserData } from './user.interface'
-import { Request } from 'express'
+import { Request, Response } from 'express'
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  async signIn(req: Request): Promise<User | UserData> {
+  async signIn(req: Request, res: Response): Promise<User | UserData> {
+    const CLIENT_BASE_URL =
+      process.env.NODE_ENV !== 'production'
+        ? 'http://localhost:8080'
+        : 'https://TODO:Addprodurl'
     const { username, avatarUrl, googleID } = req.user as UserData
     const isUser = await this.findOne({ googleID })
 
@@ -29,6 +33,6 @@ export class UserRepository extends Repository<User> {
       }
     }
 
-    return req.user as UserData
+    res.redirect(CLIENT_BASE_URL)
   }
 }
