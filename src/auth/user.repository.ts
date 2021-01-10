@@ -6,7 +6,7 @@ import { Request, Response } from 'express'
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  CLIENT_BASE_URL =
+  private CLIENT_BASE_URL =
     process.env.NODE_ENV !== 'production'
       ? 'http://localhost:8080'
       : 'https://TODO:Addprodurl'
@@ -38,6 +38,8 @@ export class UserRepository extends Repository<User> {
   }
 
   async logOut(req: Request, res: Response): Promise<void> {
+    req.session.destroy(null)
+    res.clearCookie('connect.sid')
     req.logOut()
     res.redirect(this.CLIENT_BASE_URL)
   }
