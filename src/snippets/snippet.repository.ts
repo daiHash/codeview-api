@@ -36,18 +36,6 @@ export class SnippetRepository extends Repository<Snippet> {
     }
   }
 
-  async getSnippetById(id: number): Promise<Snippet> {
-    const snippet = await this.findOne({
-      where: { id }
-    })
-
-    if (!snippet) {
-      throw new NotFoundException(`Snippet with ID "${id}" not found`)
-    }
-
-    return snippet
-  }
-
   async createSnippet(
     createSnippetDto: CreateSnippetDto,
     user: User

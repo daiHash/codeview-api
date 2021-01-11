@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { User } from 'src/auth/user.entity'
 import { CreateSnippetDto } from './dto/create-snippet.dto'
@@ -21,7 +21,15 @@ export class SnippetsService {
   }
 
   async getSnippetById(id: number): Promise<Snippet> {
-    return this.snippetRepository.getSnippetById(id)
+    const snippet = await this.snippetRepository.findOne({
+      where: { id }
+    })
+
+    if (!snippet) {
+      throw new NotFoundException(`Snippet with ID "${id}" not found`)
+    }
+
+    return snippet
   }
 
   async createSnippet(
