@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthModule } from './auth/auth.module'
+import { SnippetsModule } from './snippets/snippets.module';
 import typeOrmConfig from './config/typeorm.config'
 
 @Module({
@@ -17,7 +18,8 @@ import typeOrmConfig from './config/typeorm.config'
         ...configService.get('database')
       })
     }),
-    AuthModule
+    AuthModule,
+    SnippetsModule
   ]
 })
 export class AppModule {}
