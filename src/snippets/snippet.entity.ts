@@ -18,8 +18,8 @@ export class Snippet extends BaseEntity {
   @Column()
   description: string
 
-  @Column()
-  snippetContentMD: string
+  @Column('text', { array: true })
+  snippetContentMD: string[]
 
   @ManyToOne(() => User, (user) => user.snippets, { eager: false })
   user: User

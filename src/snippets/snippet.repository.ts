@@ -45,7 +45,7 @@ export class SnippetRepository extends Repository<Snippet> {
     const newSnippet = new Snippet()
     newSnippet.title = title
     newSnippet.description = description
-    newSnippet.snippetContentMD = snippetContentMD
+    newSnippet.snippetContentMD = [...snippetContentMD]
     newSnippet.user = user
 
     try {

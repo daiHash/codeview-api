@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator'
+import { IsNotEmpty, IsString } from 'class-validator'
 
 export class CreateSnippetDto {
   @IsNotEmpty()
@@ -7,6 +7,7 @@ export class CreateSnippetDto {
   @IsNotEmpty()
   description: string
 
+  @IsString({ each: true })
   @IsNotEmpty()
-  snippetContentMD: string
+  snippetContentMD: string[]
 }
