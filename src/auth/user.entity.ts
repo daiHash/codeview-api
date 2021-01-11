@@ -1,7 +1,9 @@
+import { Snippet } from 'src/snippets/snippet.entity'
 import {
   BaseEntity,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique
 } from 'typeorm'
@@ -20,4 +22,7 @@ export class User extends BaseEntity {
 
   @Column()
   avatarUrl: string
+
+  @OneToMany((type) => Snippet, (snippet) => snippet.user, { eager: true })
+  snippets: Snippet[]
 }
