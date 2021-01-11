@@ -20,6 +20,10 @@ export class SnippetsService {
     return this.snippetRepository.getSnippets(filterDto, user)
   }
 
+  async getSnippetById(id: number): Promise<Snippet> {
+    return this.snippetRepository.getSnippetById(id)
+  }
+
   async createSnippet(
     createSnippetDto: CreateSnippetDto,
     user: User

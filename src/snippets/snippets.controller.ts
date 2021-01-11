@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  Param,
+  ParseIntPipe,
   Post,
   Query,
   UseGuards,
@@ -27,6 +29,11 @@ export class SnippetsController {
     @GetUser() user: User
   ): Promise<Snippet[]> {
     return this.snippetsService.getSnippets(filterDto, user)
+  }
+
+  @Get('/:id')
+  getSnippetById(@Param('id', ParseIntPipe) id: number): Promise<Snippet> {
+    return this.snippetsService.getSnippetById(id)
   }
 
   @Post()

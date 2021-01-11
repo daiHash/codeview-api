@@ -1,4 +1,4 @@
-import { InternalServerErrorException } from '@nestjs/common'
+import { InternalServerErrorException, NotFoundException } from '@nestjs/common'
 import { EntityRepository, Repository } from 'typeorm'
 import { Snippet } from './snippet.entity'
 import { CreateSnippetDto } from './dto/create-snippet.dto'
@@ -34,6 +34,18 @@ export class SnippetRepository extends Repository<Snippet> {
     } catch (error) {
       throw new InternalServerErrorException()
     }
+  }
+
+  async getSnippetById(id: number): Promise<Snippet> {
+    const snippet = await this.findOne({
+      where: { id }
+    })
+
+    if (!snippet) {
+      throw new NotFoundException(`Snippet with ID "${id}" not found`)
+    }
+
+    return snippet
   }
 
   async createSnippet(
