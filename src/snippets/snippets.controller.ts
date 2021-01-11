@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -43,5 +44,13 @@ export class SnippetsController {
     @GetUser() user: User
   ): Promise<Snippet> {
     return this.snippetsService.createSnippet(createSnippetDto, user)
+  }
+
+  @Delete('/:id')
+  deleteSnippet(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: User
+  ): Promise<void> {
+    return this.snippetsService.deleteSnippet(id, user)
   }
 }

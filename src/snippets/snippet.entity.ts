@@ -23,4 +23,7 @@ export class Snippet extends BaseEntity {
 
   @ManyToOne(() => User, (user) => user.snippets, { eager: false })
   user: User
+
+  @Column()
+  userId: number
 }

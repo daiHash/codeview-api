@@ -38,4 +38,12 @@ export class SnippetsService {
   ): Promise<Snippet> {
     return this.snippetRepository.createSnippet(createSnippetDto, user)
   }
+
+  async deleteSnippet(id: number, user: User): Promise<void> {
+    const result = await this.snippetRepository.delete({ id, userId: user.id })
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`Snippet with ID "${id}" not found`)
+    }
+  }
 }
