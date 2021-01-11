@@ -4,8 +4,7 @@ import {
   Column,
   Entity,
   ManyToOne,
-  PrimaryGeneratedColumn,
-  Unique
+  PrimaryGeneratedColumn
 } from 'typeorm'
 
 @Entity()
@@ -22,6 +21,6 @@ export class Snippet extends BaseEntity {
   @Column()
   snippetContentMD: string
 
-  @ManyToOne((type) => User, (user) => user.snippets, { eager: false })
+  @ManyToOne(() => User, (user) => user.snippets, { eager: false })
   user: User
 }

@@ -23,6 +23,9 @@ export class User extends BaseEntity {
   @Column()
   avatarUrl: string
 
-  @OneToMany((type) => Snippet, (snippet) => snippet.user, { eager: true })
-  snippets: Snippet[]
+  @OneToMany(() => Snippet, (snippet) => snippet.user, {
+    eager: true,
+    nullable: true
+  })
+  snippets: Snippet[] | null
 }
