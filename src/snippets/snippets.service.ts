@@ -20,9 +20,9 @@ export class SnippetsService {
     return this.snippetRepository.getSnippets(filterDto, user)
   }
 
-  async getSnippetById(id: number): Promise<Snippet> {
+  async getSnippetById(id: number, user: User): Promise<Snippet> {
     const snippet = await this.snippetRepository.findOne({
-      where: { id }
+      where: { id, userId: user.id }
     })
 
     if (!snippet) {
@@ -37,6 +37,21 @@ export class SnippetsService {
     user: User
   ): Promise<Snippet> {
     return this.snippetRepository.createSnippet(createSnippetDto, user)
+  }
+
+  async updateSnippet(
+    id: number,
+    user: User,
+    createSnippetDto: Partial<CreateSnippetDto>
+  ): Promise<Snippet> {
+    const snippet = await this.getSnippetById(id, user)
+    const { title, description, snippetContentMD } = createSnippetDto
+    if (title) snippet.title = title
+    if (description) snippet.description = description
+    if (snippetContentMD) snippet.snippetContentMD = [...snippetContentMD]
+
+    await snippet.save()
+    return snippet
   }
 
   async deleteSnippet(id: number, user: User): Promise<void> {

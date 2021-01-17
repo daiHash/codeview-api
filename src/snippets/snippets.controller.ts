@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   Query,
   UseGuards,
@@ -33,8 +34,11 @@ export class SnippetsController {
   }
 
   @Get('/:id')
-  getSnippetById(@Param('id', ParseIntPipe) id: number): Promise<Snippet> {
-    return this.snippetsService.getSnippetById(id)
+  getSnippetById(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: User
+  ): Promise<Snippet> {
+    return this.snippetsService.getSnippetById(id, user)
   }
 
   @Post()
@@ -44,6 +48,15 @@ export class SnippetsController {
     @GetUser() user: User
   ): Promise<Snippet> {
     return this.snippetsService.createSnippet(createSnippetDto, user)
+  }
+
+  @Patch('/:id')
+  updateSnippet(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: User,
+    @Body() createSnippetDto: CreateSnippetDto
+  ): Promise<Snippet> {
+    return this.snippetsService.updateSnippet(id, user, createSnippetDto)
   }
 
   @Delete('/:id')
