@@ -3,7 +3,7 @@ name: Deploy to AppEngine
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   PROJECT_ID: 'code-snippet-memo'
