@@ -18,7 +18,7 @@ export class Snippet extends BaseEntity {
   @Column()
   description: string
 
-  // TODO: Think about the data here
+  // TODO: Think about the data here array or just string text
   @Column('text', { array: true })
   snippetContentMD: string[]
 
