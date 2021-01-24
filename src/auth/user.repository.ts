@@ -7,7 +7,7 @@ import { Request, Response } from 'express'
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
   private CLIENT_BASE_URL =
-    process.env.NODE_ENV !== 'production'
+    process.env.NODE_ENV === 'development'
       ? 'http://localhost:8080'
       : 'https://TODO:Addprodurl'
 
