@@ -2,8 +2,9 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthModule } from './auth/auth.module'
-import { SnippetsModule } from './snippets/snippets.module';
+import { SnippetsModule } from './snippets/snippets.module'
 import typeOrmConfig from './config/typeorm.config'
+import { AppController } from './app.controller'
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import typeOrmConfig from './config/typeorm.config'
     }),
     AuthModule,
     SnippetsModule
-  ]
+  ],
+  controllers: [AppController]
 })
 export class AppModule {}
