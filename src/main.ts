@@ -5,7 +5,7 @@ import { AppModule } from './app.module'
 import * as session from 'express-session'
 // import flash = require('connect-flash')
 import * as passport from 'passport'
-import createMemoryStore from 'memorystore'
+import createMemoryStore = require('memorystore')
 const MemoryStore = createMemoryStore(session)
 
 async function bootstrap() {
