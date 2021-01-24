@@ -8,6 +8,6 @@ export default () => ({
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
     entities: [__dirname + '/../**/*.entity.{js,ts}'],
-    synchronize: process.env.NODE_ENV === 'development' ? true : false
+    synchronize: true
   }
 })
