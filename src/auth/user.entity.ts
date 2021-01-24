@@ -1,4 +1,4 @@
-import { Snippet } from 'src/snippets/snippet.entity'
+import { Snippet } from '../snippets/snippet.entity'
 import {
   BaseEntity,
   Column,

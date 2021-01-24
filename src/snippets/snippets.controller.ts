@@ -12,9 +12,9 @@ import {
   UsePipes,
   ValidationPipe
 } from '@nestjs/common'
-import { GetUser } from 'src/auth/get-user.decorator'
-import { User } from 'src/auth/user.entity'
-import { AuthenticatedGuard } from 'src/common/guards/authenticated.guard'
+import { GetUser } from '../auth/get-user.decorator'
+import { User } from '../auth/user.entity'
+import { AuthenticatedGuard } from '../common/guards/authenticated.guard'
 import { CreateSnippetDto } from './dto/create-snippet.dto'
 import { GetSnippetsFilterDto } from './dto/get-snippets-filter.dto'
 import { Snippet } from './snippet.entity'

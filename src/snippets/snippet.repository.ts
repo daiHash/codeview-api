@@ -1,8 +1,8 @@
-import { InternalServerErrorException, NotFoundException } from '@nestjs/common'
+import { InternalServerErrorException } from '@nestjs/common'
 import { EntityRepository, Repository } from 'typeorm'
 import { Snippet } from './snippet.entity'
 import { CreateSnippetDto } from './dto/create-snippet.dto'
-import { User } from 'src/auth/user.entity'
+import { User } from '../auth/user.entity'
 import { GetSnippetsFilterDto } from './dto/get-snippets-filter.dto'
 
 @EntityRepository(Snippet)
