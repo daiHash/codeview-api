@@ -43,4 +43,4 @@ jobs:
       - name: Deploy
         run: |
           gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-          gcloud app deploy --quiet --project $PROJECT_ID
+          gcloud app deploy app.yml --quiet --project $PROJECT_ID
