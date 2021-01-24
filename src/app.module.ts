@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module'
 import { SnippetsModule } from './snippets/snippets.module'
 import typeOrmConfig from './config/typeorm.config'
 import { AppController } from './app.controller'
+import { AppService } from './app.service'
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AppController } from './app.controller'
     AuthModule,
     SnippetsModule
   ],
-  controllers: [AppController]
+  controllers: [AppController],
+  providers: [AppService]
 })
 export class AppModule {}
