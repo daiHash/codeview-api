@@ -3,8 +3,8 @@ env: standard
 
 env_variables:
   # GOOGLE
-  GOOGLE_CLIENT_ID: '87183063500-r0p56n9b3k5pg3i6gkh7g06lk7a9eu3a.apps.googleusercontent.com'
-  GOOGLE_SECRET: 'suBkxmjiQtg5zY_fHMXxxuSZ'
+  GOOGLE_CLIENT_ID: '87183063500-d60btrcnk7jdn9j3impgqte7bt35d88i.apps.googleusercontent.com'
+  GOOGLE_SECRET: 'S8s_AtnBPXvWXAXK5ZgVHZ97'
   # DATABASE
   DATABASE_HOST: '/cloudsql/code-snippet-memo:asia-northeast1:code-snippet-memo'
   DATABASE_PORT: 5432

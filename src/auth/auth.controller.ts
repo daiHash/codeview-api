@@ -20,12 +20,12 @@ export class AuthController {
     return this.authService.signIn(req, res)
   }
 
-  @Get('/current_user')
+  @Get('current_user')
   getProfile(@Req() req: Request) {
     return { isCurrentUser: !!req.user }
   }
 
-  @Get('/logout')
+  @Get('logout')
   @UseGuards(AuthenticatedGuard)
   logOut(@Req() req: Request, @Res() res: Response) {
     return this.authService.logOut(req, res)
