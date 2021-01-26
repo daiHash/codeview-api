@@ -6,10 +6,10 @@ import { Request, Response } from 'express'
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  private CLIENT_BASE_URL =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:8080'
-      : 'https://TODO:Addprodurl'
+  private CLIENT_BASE_URL = 'http://localhost:8080'
+  //   process.env.NODE_ENV === 'development'
+  //     ? 'http://localhost:8080'
+  //     : 'https://TODO:Addprodurl'
 
   async signIn(req: Request, res: Response): Promise<void> {
     const { username, avatarUrl, googleID } = req.user as UserData
