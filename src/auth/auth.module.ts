@@ -3,13 +3,13 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
 import { GoogleStrategy } from './google.strategy'
-import { SessionSerializer } from './session.serializer'
+import { SessionSerializer } from './session/session.serializer'
 import { UserRepository } from './user.repository'
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserRepository])],
   controllers: [AuthController],
   providers: [AuthService, GoogleStrategy, SessionSerializer],
-  exports: [GoogleStrategy, AuthService]
+  exports: [AuthService]
 })
 export class AuthModule {}

@@ -4,13 +4,17 @@ import { AppModule } from './app.module'
 
 import * as helmet from 'helmet'
 import * as session from 'express-session'
-// import flash = require('connect-flash')
 import * as passport from 'passport'
-import createMemoryStore = require('memorystore')
-const MemoryStore = createMemoryStore(session)
+import { TypeormStore } from 'connect-typeorm'
+import { getRepository } from 'typeorm'
+import { TypeORMSession } from './auth/session/session.entity'
+// import flash = require('connect-flash')
+// import createMemoryStore = require('memorystore')
+// const MemoryStore = createMemoryStore(session)
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+  const sessionRepo = getRepository(TypeORMSession)
   const configService = app.get(ConfigService)
   app.setGlobalPrefix('api')
 
@@ -29,9 +33,7 @@ async function bootstrap() {
       cookie: {
         maxAge: 1000 * 2592000 // 30 days
       },
-      store: new MemoryStore({
-        checkPeriod: 86400000
-      })
+      store: new TypeormStore().connect(sessionRepo)
     })
   )
 
