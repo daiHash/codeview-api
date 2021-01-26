@@ -2,6 +2,7 @@ import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 
+import * as helmet from 'helmet'
 import * as session from 'express-session'
 // import flash = require('connect-flash')
 import * as passport from 'passport'
@@ -12,6 +13,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   const configService = app.get(ConfigService)
   app.setGlobalPrefix('api')
+
+  app.use(helmet())
 
   app.enableCors({
     origin: ['http://localhost:8080'],
