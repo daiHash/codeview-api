@@ -3,6 +3,7 @@ import {
   BaseEntity,
   Column,
   Entity,
+  Index,
   ManyToOne,
   PrimaryGeneratedColumn
 } from 'typeorm'
@@ -22,6 +23,7 @@ export class Snippet extends BaseEntity {
   @Column('text', { array: true })
   snippetContentMD: string[]
 
+  @Index()
   @ManyToOne(() => User, (user) => user.snippets, { eager: false })
   user: User
 
