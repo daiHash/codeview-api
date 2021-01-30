@@ -1,12 +1,12 @@
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common'
-import { AuthService } from './auth.service'
 import { Request, Response } from 'express'
 import { AuthenticatedGuard } from '../common/guards/authenticated.guard'
 import { GoogleAuthGuard } from '../common/guards/googleauth.guard'
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  // TODO: Set client url when fixed
+  private CLIENT_BASE_URL = 'http://localhost:8080'
 
   @Get('google')
   @UseGuards(GoogleAuthGuard)
@@ -16,8 +16,8 @@ export class AuthController {
 
   @Get('google/callback')
   @UseGuards(GoogleAuthGuard)
-  async googleCallback(@Req() req: Request, @Res() res: Response) {
-    return this.authService.signIn(req, res)
+  async googleCallback(@Res() res: Response) {
+    res.redirect(this.CLIENT_BASE_URL)
   }
 
   @Get('current_user')
@@ -28,6 +28,9 @@ export class AuthController {
   @Get('logout')
   @UseGuards(AuthenticatedGuard)
   logOut(@Req() req: Request, @Res() res: Response) {
-    return this.authService.logOut(req, res)
+    req.session.destroy(null)
+    res.clearCookie('connect.sid')
+    req.logOut()
+    res.redirect(this.CLIENT_BASE_URL)
   }
 }

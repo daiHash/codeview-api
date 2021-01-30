@@ -1,18 +1,36 @@
-import { Injectable } from '@nestjs/common'
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException
+} from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { UserRepository } from './user.repository'
-import { Request, Response } from 'express'
+import { UserData } from './user.interface'
+import { User } from './user.entity'
+import { Repository } from 'typeorm'
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(UserRepository) private userRepository: UserRepository
+    @InjectRepository(User) private userRepository: Repository<User>
   ) {}
 
-  signIn(req: Request, res: Response): Promise<void> {
-    return this.userRepository.signIn(req, res)
-  }
+  async validateUser(user: UserData) {
+    const { googleID } = user
+    const isUser = await this.userRepository.findOne({ googleID })
 
-  logOut(req: Request, res: Response): Promise<void> {
-    return this.userRepository.logOut(req, res)
+    if (!isUser) {
+      try {
+        const newUser = this.userRepository.create(user)
+        return this.userRepository.save(newUser)
+      } catch (error) {
+        if (error.code === '23505') {
+          // Duplicate user key
+          throw new ConflictException('User already exists')
+        } else {
+          console.error({ error })
+          throw new InternalServerErrorException()
+        }
+      }
+    }
+    return user
   }
 }
