@@ -9,10 +9,11 @@ import { TypeormStore } from 'connect-typeorm'
 import { getRepository } from 'typeorm'
 import { TypeORMSession } from './auth/session/session.entity'
 import * as cookieParser from 'cookie-parser'
+import { NestExpressApplication } from '@nestjs/platform-express'
 // import flash = require('connect-flash')
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create<NestExpressApplication>(AppModule)
   const sessionRepo = getRepository(TypeORMSession)
   const configService = app.get(ConfigService)
   app.setGlobalPrefix('api')
@@ -24,6 +25,8 @@ async function bootstrap() {
     credentials: true
   })
 
+  app.set('trust proxy', 1) // trust first proxy
+
   app.use(
     session({
       secret: configService.get('SESSION_SECRET'),
@@ -31,8 +34,8 @@ async function bootstrap() {
       saveUninitialized: false,
       cookie: {
         maxAge: 1000 * 2592000, // 30 days,
-        domain: 'http://localhost:8080'
-        // secure: true
+        domain: 'http://localhost:8080',
+        secure: true
       },
       store: new TypeormStore().connect(sessionRepo)
     })
