@@ -33,9 +33,9 @@ async function bootstrap() {
       resave: false,
       saveUninitialized: false,
       cookie: {
-        maxAge: 1000 * 2592000, // 30 days,
-        domain: 'http://localhost:8080',
-        secure: true
+        maxAge: 1000 * 2592000 // 30 days,
+        // domain: 'http://localhost:8080',
+        // secure: true
       },
       store: new TypeormStore().connect(sessionRepo)
     })
