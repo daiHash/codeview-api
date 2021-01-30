@@ -8,9 +8,8 @@ import * as passport from 'passport'
 import { TypeormStore } from 'connect-typeorm'
 import { getRepository } from 'typeorm'
 import { TypeORMSession } from './auth/session/session.entity'
+import * as cookieParser from 'cookie-parser'
 // import flash = require('connect-flash')
-// import createMemoryStore = require('memorystore')
-// const MemoryStore = createMemoryStore(session)
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -19,6 +18,8 @@ async function bootstrap() {
   app.setGlobalPrefix('api')
 
   app.use(helmet())
+
+  app.use(cookieParser())
 
   app.enableCors({
     origin: ['http://localhost:8080'],
