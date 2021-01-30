@@ -19,8 +19,6 @@ async function bootstrap() {
 
   app.use(helmet())
 
-  app.use(cookieParser())
-
   app.enableCors({
     origin: ['http://localhost:8080'],
     credentials: true
@@ -32,11 +30,15 @@ async function bootstrap() {
       resave: false,
       saveUninitialized: false,
       cookie: {
-        maxAge: 1000 * 2592000 // 30 days
+        maxAge: 1000 * 2592000, // 30 days,
+        domain: 'http://localhost:8080'
+        // secure: true
       },
       store: new TypeormStore().connect(sessionRepo)
     })
   )
+
+  app.use(cookieParser())
 
   app.use(passport.initialize())
   app.use(passport.session())
