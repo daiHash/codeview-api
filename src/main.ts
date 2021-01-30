@@ -31,9 +31,9 @@ async function bootstrap() {
       secret: configService.get('SESSION_SECRET'),
       resave: false,
       saveUninitialized: false,
-      cookie: {
-        maxAge: 1000 * 2592000 // 30 days
-      },
+      // cookie: {
+      //   maxAge: 1000 * 2592000 // 30 days
+      // },
       store: new TypeormStore().connect(sessionRepo)
     })
   )
