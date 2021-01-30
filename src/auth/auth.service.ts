@@ -15,12 +15,11 @@ export class AuthService {
 
   async validateUser(user: UserData) {
     const { googleID } = user
-    const isUser = await this.userRepository.findOne({ googleID })
+    const isUser = await this.findUser(googleID)
 
     if (!isUser) {
       try {
-        const newUser = this.userRepository.create(user)
-        return this.userRepository.save(newUser)
+        this.createUser(user)
       } catch (error) {
         if (error.code === '23505') {
           // Duplicate user key
@@ -32,5 +31,14 @@ export class AuthService {
       }
     }
     return user
+  }
+
+  createUser(user: UserData) {
+    const newUser = this.userRepository.create(user)
+    return this.userRepository.save(newUser)
+  }
+
+  async findUser(googleID: string) {
+    return this.userRepository.findOne({ googleID })
   }
 }
