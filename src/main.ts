@@ -30,6 +30,7 @@ async function bootstrap() {
     secret: configService.get('SESSION_SECRET'),
     resave: false,
     saveUninitialized: false,
+    // name: 'session',
     cookie: {
       maxAge: 24 * 60 * 60 * 1000 // 24 hours
     },
@@ -42,7 +43,7 @@ async function bootstrap() {
     // userSession.cookie.domain = configService.get('CLIENT_BASE_URL')
     userSession.cookie.secure = true
     userSession.cookie.sameSite = 'none'
-    userSession.cookie.httpOnly = true
+    userSession.proxy = true
   }
 
   app.use(session(userSession))
