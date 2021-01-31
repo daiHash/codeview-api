@@ -21,10 +21,7 @@ async function bootstrap() {
   app.use(helmet())
 
   app.enableCors({
-    origin: [
-      'http://localhost:8080',
-      'https://code-snippet-memo-frontend-ekjiz8j5t.vercel.app/'
-    ],
+    origin: [configService.get('CLIENT_BASE_URL')],
     credentials: true
   })
 

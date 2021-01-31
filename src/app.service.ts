@@ -10,7 +10,8 @@ export class AppService {
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       cbURL: process.env.GOOGLE_CALLBACK_URL,
-      env: process.env.NODE_ENV
+      env: process.env.NODE_ENV,
+      baseUrl: process.env.CLIENT_BASE_URL
     }
   }
 }
