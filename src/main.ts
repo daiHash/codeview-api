@@ -30,14 +30,13 @@ async function bootstrap() {
     secret: configService.get('SESSION_SECRET'),
     resave: false,
     saveUninitialized: false,
-    // name: 'session',
     cookie: {
       maxAge: 24 * 60 * 60 * 1000 // 24 hours
     },
     store: new TypeormStore().connect(sessionRepo)
   }
 
-  if (configService.get('NODE_ENV') !== 'development') {
+  if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1) // trust first proxy
     userSession.cookie.domain = '.code-snippet-memo-frontend.vercel.app'
     // userSession.cookie.domain = configService.get('CLIENT_BASE_URL')
