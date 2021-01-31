@@ -30,7 +30,7 @@ async function bootstrap() {
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 1000 * 2592000 // 30 days,
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
     },
     store: new TypeormStore().connect(sessionRepo)
   }
@@ -39,6 +39,7 @@ async function bootstrap() {
     app.set('trust proxy', 1) // trust first proxy
     userSession.cookie.domain = configService.get('CLIENT_BASE_URL')
     userSession.cookie.secure = true
+    userSession.cookie.sameSite = 'none'
   }
 
   app.use(session(userSession))
