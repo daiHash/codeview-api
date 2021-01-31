@@ -10,7 +10,6 @@ import { getRepository } from 'typeorm'
 import { TypeORMSession } from './auth/session/session.entity'
 import * as cookieParser from 'cookie-parser'
 import { NestExpressApplication } from '@nestjs/platform-express'
-// import flash = require('connect-flash')
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
@@ -39,7 +38,8 @@ async function bootstrap() {
 
   if (configService.get('NODE_ENV') !== 'development') {
     app.set('trust proxy', 1) // trust first proxy
-    userSession.cookie.domain = configService.get('CLIENT_BASE_URL')
+    userSession.cookie.domain = '.code-snippet-memo-frontend.vercel.app'
+    // userSession.cookie.domain = configService.get('CLIENT_BASE_URL')
     userSession.cookie.secure = true
     userSession.cookie.sameSite = 'none'
     userSession.cookie.httpOnly = true
@@ -49,7 +49,6 @@ async function bootstrap() {
 
   app.use(passport.initialize())
   app.use(passport.session())
-  // app.use(flash())
 
   const port = configService.get('PORT') || 3000
   await app.listen(port, () => {

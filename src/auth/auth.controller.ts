@@ -13,9 +13,8 @@ export class AuthController {
 
   @Get('google/callback')
   @UseGuards(GoogleAuthGuard)
-  async googleCallback(@Req() req: Request, @Res() res: Response) {
-    res.status(200)
-    // res.redirect(process.env.CLIENT_BASE_URL)
+  async googleCallback(@Res() res: Response) {
+    res.redirect(process.env.CLIENT_BASE_URL)
   }
 
   @Get('current_user')
