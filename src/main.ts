@@ -25,26 +25,27 @@ async function bootstrap() {
     credentials: true
   })
 
+  app.use(cookieParser())
+
   const userSession: session.SessionOptions = {
     secret: configService.get('SESSION_SECRET'),
     resave: false,
     saveUninitialized: false,
-    // cookie: {
-    //   maxAge: 24 * 60 * 60 * 1000 // 24 hours
-    // },
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    },
     store: new TypeormStore().connect(sessionRepo)
   }
 
-  // if (process.env.NODE_ENV !== 'development') {
-  //   app.set('trust proxy', 1) // trust first proxy
-  //   userSession.cookie.domain = configService.get('CLIENT_BASE_URL')
-  //   userSession.cookie.secure = true
-  //   userSession.cookie.sameSite = 'none'
-  // }
+  if (configService.get('NODE_ENV') !== 'development') {
+    app.set('trust proxy', 1) // trust first proxy
+    userSession.cookie.domain = configService.get('CLIENT_BASE_URL')
+    userSession.cookie.secure = true
+    userSession.cookie.sameSite = 'none'
+    userSession.cookie.httpOnly = true
+  }
 
   app.use(session(userSession))
-
-  app.use(cookieParser())
 
   app.use(passport.initialize())
   app.use(passport.session())
