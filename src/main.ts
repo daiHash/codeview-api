@@ -25,22 +25,23 @@ async function bootstrap() {
     credentials: true
   })
 
-  app.set('trust proxy', 1) // trust first proxy
+  const userSession: session.SessionOptions = {
+    secret: configService.get('SESSION_SECRET'),
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 2592000 // 30 days,
+    },
+    store: new TypeormStore().connect(sessionRepo)
+  }
 
-  app.use(
-    session({
-      secret: configService.get('SESSION_SECRET'),
-      resave: false,
-      saveUninitialized: false,
-      cookie: {
-        maxAge: 1000 * 2592000 // 30 days,
-        // domain: 'http://localhost:8080',
-        // secure: true
-        // sameSite: 'none'
-      },
-      store: new TypeormStore().connect(sessionRepo)
-    })
-  )
+  if (process.env.NODE_ENV !== 'development') {
+    app.set('trust proxy', 1) // trust first proxy
+    userSession.cookie.domain = configService.get('CLIENT_BASE_URL')
+    userSession.cookie.secure = true
+  }
+
+  app.use(session(userSession))
 
   app.use(cookieParser())
 
