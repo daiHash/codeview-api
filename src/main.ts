@@ -21,7 +21,10 @@ async function bootstrap() {
   app.use(helmet())
 
   app.enableCors({
-    origin: ['http://localhost:8080'],
+    origin: [
+      'http://localhost:8080',
+      'https://code-snippet-memo-frontend-ekjiz8j5t.vercel.app/'
+    ],
     credentials: true
   })
 
@@ -36,6 +39,7 @@ async function bootstrap() {
         maxAge: 1000 * 2592000 // 30 days,
         // domain: 'http://localhost:8080',
         // secure: true
+        // sameSite: 'none'
       },
       store: new TypeormStore().connect(sessionRepo)
     })
