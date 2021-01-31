@@ -29,18 +29,18 @@ async function bootstrap() {
     secret: configService.get('SESSION_SECRET'),
     resave: false,
     saveUninitialized: false,
-    cookie: {
-      maxAge: 24 * 60 * 60 * 1000 // 24 hours
-    },
+    // cookie: {
+    //   maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    // },
     store: new TypeormStore().connect(sessionRepo)
   }
 
-  if (process.env.NODE_ENV !== 'development') {
-    app.set('trust proxy', 1) // trust first proxy
-    userSession.cookie.domain = configService.get('CLIENT_BASE_URL')
-    userSession.cookie.secure = true
-    userSession.cookie.sameSite = 'none'
-  }
+  // if (process.env.NODE_ENV !== 'development') {
+  //   app.set('trust proxy', 1) // trust first proxy
+  //   userSession.cookie.domain = configService.get('CLIENT_BASE_URL')
+  //   userSession.cookie.secure = true
+  //   userSession.cookie.sameSite = 'none'
+  // }
 
   app.use(session(userSession))
 
