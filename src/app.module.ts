@@ -5,7 +5,6 @@ import { AuthModule } from './auth/auth.module'
 import { SnippetsModule } from './snippets/snippets.module'
 import typeOrmConfig from './config/typeorm.config'
 import { AppController } from './app.controller'
-import { AppService } from './app.service'
 import { PassportModule } from '@nestjs/passport'
 
 @Module({
@@ -25,7 +24,6 @@ import { PassportModule } from '@nestjs/passport'
     AuthModule,
     SnippetsModule
   ],
-  controllers: [AppController],
-  providers: [AppService]
+  controllers: [AppController]
 })
 export class AppModule {}
