@@ -38,7 +38,7 @@ async function bootstrap() {
 
   if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1) // trust first proxy
-    // userSession.cookie.domain = '.code-snippet-memo-frontend.vercel.app'
+    userSession.cookie.domain = '.code-snippet-memo-frontend.vercel.app'
     // userSession.cookie.domain = configService.get('CLIENT_BASE_URL')
     userSession.cookie.secure = true
     userSession.cookie.sameSite = 'none'
