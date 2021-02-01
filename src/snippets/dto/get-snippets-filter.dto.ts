@@ -8,4 +8,8 @@ export class GetSnippetsFilterDto {
   @IsOptional()
   @IsNotEmpty()
   search: string
+
+  @IsOptional()
+  @IsNotEmpty()
+  size: number
 }
