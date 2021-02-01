@@ -1,14 +1,7 @@
 import { Controller, Get } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
-import { User } from './auth/user.entity'
 
 @Controller()
 export class AppController {
-  constructor(
-    @InjectRepository(User) private userRepository: Repository<User>
-  ) {}
-
   @Get()
   getHello() {
     return {
