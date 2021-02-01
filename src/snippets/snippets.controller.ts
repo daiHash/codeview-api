@@ -5,8 +5,8 @@ import {
   Get,
   Param,
   ParseIntPipe,
-  Patch,
   Post,
+  Put,
   Query,
   UseGuards,
   UsePipes,
@@ -50,7 +50,7 @@ export class SnippetsController {
     return this.snippetsService.createSnippet(createSnippetDto, user)
   }
 
-  @Patch('/:id')
+  @Put('/:id')
   updateSnippet(
     @Param('id', ParseIntPipe) id: number,
     @GetUser() user: User,

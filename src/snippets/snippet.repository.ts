@@ -7,6 +7,32 @@ import { GetSnippetsFilterDto } from './dto/get-snippets-filter.dto'
 
 @EntityRepository(Snippet)
 export class SnippetRepository extends Repository<Snippet> {
+  async getLatestGuestSnippets({
+    search,
+    tags,
+    size = 10
+  }: GetSnippetsFilterDto): Promise<Snippet[]> {
+    const query = this.createQueryBuilder('snippet')
+
+    if (tags) {
+      query.andWhere('snippet.tags = :tags', { tags })
+    }
+
+    if (search) {
+      query.andWhere(
+        '(snippet.title LIKE :search OR snippet.description LIKE :search)',
+        { search: `%${search}%` }
+      )
+    }
+
+    try {
+      const snippets = await query.addOrderBy('id', 'DESC').take(size).getMany()
+      return snippets
+    } catch (error) {
+      throw new InternalServerErrorException()
+    }
+  }
+
   async getSnippets(
     filterDto: GetSnippetsFilterDto,
     user: User
@@ -29,8 +55,8 @@ export class SnippetRepository extends Repository<Snippet> {
     }
 
     try {
-      const tasks = await query.getMany()
-      return tasks
+      const snippets = await query.getMany()
+      return snippets
     } catch (error) {
       throw new InternalServerErrorException()
     }

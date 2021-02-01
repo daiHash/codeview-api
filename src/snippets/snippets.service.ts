@@ -13,6 +13,12 @@ export class SnippetsService {
     private snippetRepository: SnippetRepository
   ) {}
 
+  async getAllGuestSnippets(
+    filterDto: GetSnippetsFilterDto
+  ): Promise<Snippet[]> {
+    return this.snippetRepository.getLatestGuestSnippets(filterDto)
+  }
+
   async getSnippets(
     filterDto: GetSnippetsFilterDto,
     user: User
