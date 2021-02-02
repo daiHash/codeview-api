@@ -2,10 +2,12 @@ import { User } from '../auth/user.entity'
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   Index,
   ManyToOne,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
 } from 'typeorm'
 
 @Entity()
@@ -29,4 +31,10 @@ export class Snippet extends BaseEntity {
 
   @Column()
   userId: number
+
+  @CreateDateColumn()
+  createdAt: string
+
+  @UpdateDateColumn({ type: 'timestamp' })
+  updatedAt: number
 }
