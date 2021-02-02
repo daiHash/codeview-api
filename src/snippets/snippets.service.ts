@@ -26,9 +26,9 @@ export class SnippetsService {
     return this.snippetRepository.getSnippets(filterDto, user)
   }
 
-  async getSnippetById(id: number, user: User): Promise<Snippet> {
+  async getSnippetById(id: number, user?: User): Promise<Snippet> {
     const snippet = await this.snippetRepository.findOne({
-      where: { id, userId: user.id }
+      where: { id, userId: user ? user.id : undefined }
     })
 
     if (!snippet) {

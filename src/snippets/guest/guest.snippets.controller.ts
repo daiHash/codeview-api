@@ -24,10 +24,7 @@ export class GuestSnippetsController {
   }
 
   @Get('/snippet/:id')
-  getSnippetById(
-    @Param('id', ParseIntPipe) id: number,
-    @GetUser() user: User
-  ): Promise<Snippet> {
-    return this.snippetsService.getSnippetById(id, user)
+  getSnippetById(@Param('id', ParseIntPipe) id: number): Promise<Snippet> {
+    return this.snippetsService.getSnippetById(id)
   }
 }
