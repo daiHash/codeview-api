@@ -27,8 +27,17 @@ export class SnippetsService {
   }
 
   async getSnippetById(id: number, user?: User): Promise<Snippet> {
+    const snippetQueryData = user
+      ? {
+          id,
+          userId: user.id
+        }
+      : { id }
+
+    console.log(snippetQueryData)
+
     const snippet = await this.snippetRepository.findOne({
-      where: { id, userId: user ? user.id : undefined }
+      where: snippetQueryData
     })
 
     if (!snippet) {
