@@ -5,6 +5,7 @@ import { CreateSnippetDto } from './dto/create-snippet.dto'
 import { GetSnippetsFilterDto } from './dto/get-snippets-filter.dto'
 import { Snippet } from './snippet.entity'
 import { SnippetRepository } from './snippet.repository'
+import { SnippetByID } from './snippets.interface'
 
 @Injectable()
 export class SnippetsService {
@@ -26,15 +27,8 @@ export class SnippetsService {
     return this.snippetRepository.getSnippets(filterDto, user)
   }
 
-  async getSnippetById(id: number, user?: User): Promise<Snippet> {
-    const snippetQueryData = user
-      ? {
-          id,
-          userId: user.id
-        }
-      : { id }
-
-    console.log(snippetQueryData)
+  async getSnippetById(id: number, user?: User): Promise<SnippetByID> {
+    const snippetQueryData = { id }
 
     const snippet = await this.snippetRepository.findOne({
       where: snippetQueryData
@@ -44,7 +38,12 @@ export class SnippetsService {
       throw new NotFoundException(`Snippet with ID "${id}" not found`)
     }
 
-    return snippet
+    const snippetByID = {
+      ...snippet,
+      isUser: snippet.userId === user.id
+    } as SnippetByID
+
+    return snippetByID
   }
 
   async createSnippet(

@@ -18,14 +18,15 @@ import { AuthenticatedGuard } from '../common/guards/authenticated.guard'
 import { CreateSnippetDto } from './dto/create-snippet.dto'
 import { GetSnippetsFilterDto } from './dto/get-snippets-filter.dto'
 import { Snippet } from './snippet.entity'
+import { SnippetByID } from './snippets.interface'
 import { SnippetsService } from './snippets.service'
 
 @Controller('snippets')
-@UseGuards(AuthenticatedGuard)
 export class SnippetsController {
   constructor(private snippetsService: SnippetsService) {}
 
   @Get()
+  @UseGuards(AuthenticatedGuard)
   getSnippets(
     @Query(ValidationPipe) filterDto: GetSnippetsFilterDto,
     @GetUser() user: User
@@ -37,11 +38,12 @@ export class SnippetsController {
   getSnippetById(
     @Param('id', ParseIntPipe) id: number,
     @GetUser() user: User
-  ): Promise<Snippet> {
+  ): Promise<SnippetByID> {
     return this.snippetsService.getSnippetById(id, user)
   }
 
   @Post()
+  @UseGuards(AuthenticatedGuard)
   @UsePipes(ValidationPipe)
   createSnippet(
     @Body() createSnippetDto: CreateSnippetDto,
@@ -51,6 +53,7 @@ export class SnippetsController {
   }
 
   @Put('/:id')
+  @UseGuards(AuthenticatedGuard)
   updateSnippet(
     @Param('id', ParseIntPipe) id: number,
     @GetUser() user: User,
@@ -60,6 +63,7 @@ export class SnippetsController {
   }
 
   @Delete('/:id')
+  @UseGuards(AuthenticatedGuard)
   deleteSnippet(
     @Param('id', ParseIntPipe) id: number,
     @GetUser() user: User

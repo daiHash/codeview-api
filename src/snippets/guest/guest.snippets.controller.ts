@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Get,
-  Param,
-  ParseIntPipe,
-  Query,
-  ValidationPipe
-} from '@nestjs/common'
-import { GetUser } from '../../auth/get-user.decorator'
-import { User } from '../../auth/user.entity'
+import { Controller, Get, Query, ValidationPipe } from '@nestjs/common'
 import { GetSnippetsFilterDto } from '../dto/get-snippets-filter.dto'
 import { Snippet } from '../snippet.entity'
 import { SnippetsService } from '../snippets.service'
@@ -21,10 +12,5 @@ export class GuestSnippetsController {
     @Query(ValidationPipe) filterDto: GetSnippetsFilterDto
   ): Promise<Snippet[]> {
     return this.snippetsService.getAllGuestSnippets(filterDto)
-  }
-
-  @Get('/snippet/:id')
-  getSnippetById(@Param('id', ParseIntPipe) id: number): Promise<Snippet> {
-    return this.snippetsService.getSnippetById(id)
   }
 }
