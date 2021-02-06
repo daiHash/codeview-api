@@ -27,7 +27,7 @@ export class SnippetsService {
     return this.snippetRepository.getSnippets(filterDto, user)
   }
 
-  async getSnippetById(id: number, user?: User): Promise<SnippetByID> {
+  async getSnippetById(id: number, user: User): Promise<SnippetByID> {
     const snippetQueryData = { id }
 
     const snippet = await this.snippetRepository.findOne({
@@ -37,6 +37,8 @@ export class SnippetsService {
     if (!snippet) {
       throw new NotFoundException(`Snippet with ID "${id}" not found`)
     }
+
+    console.log({ snippet, user })
 
     const snippetByID = {
       ...snippet,
