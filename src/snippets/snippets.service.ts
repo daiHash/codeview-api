@@ -60,12 +60,14 @@ export class SnippetsService {
   ): Promise<Snippet> {
     const snippet = await this.getSnippetById(id, user)
     const { title, description, snippetContentMD } = createSnippetDto
+
     if (title) snippet.title = title
     if (description) snippet.description = description
     if (snippetContentMD) snippet.snippetContentMD = [...snippetContentMD]
 
-    await snippet.save()
-    return snippet
+    const updatedSnippet = this.snippetRepository.create(snippet)
+    const newSnippet = await this.snippetRepository.save(updatedSnippet)
+    return newSnippet
   }
 
   async deleteSnippet(id: number, user: User): Promise<void> {
