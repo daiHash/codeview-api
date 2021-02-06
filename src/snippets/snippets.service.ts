@@ -38,11 +38,9 @@ export class SnippetsService {
       throw new NotFoundException(`Snippet with ID "${id}" not found`)
     }
 
-    console.log({ snippet, user })
-
     const snippetByID = {
       ...snippet,
-      isUser: snippet.userId === user.id
+      isUser: user ? snippet.userId === user.id : null
     } as SnippetByID
 
     return snippetByID
