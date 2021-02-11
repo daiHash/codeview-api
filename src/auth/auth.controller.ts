@@ -2,6 +2,7 @@ import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common'
 import { Request, Response } from 'express'
 import { AuthenticatedGuard } from '../common/guards/authenticated.guard'
 import { GoogleAuthGuard } from '../common/guards/googleauth.guard'
+import { User } from './user.entity'
 
 @Controller('auth')
 export class AuthController {
@@ -19,7 +20,16 @@ export class AuthController {
 
   @Get('current_user')
   getProfile(@Req() req: Request) {
-    return { isCurrentUser: !!req.user }
+    if (req.user) {
+      const { username, avatarUrl, snippets, id } = req.user as User
+      const currentUser = {
+        id,
+        username,
+        avatarUrl,
+        snippets
+      }
+      return { isCurrentUser: !!req.user, ...currentUser }
+    }
   }
 
   @Get('logout')
