@@ -15,7 +15,10 @@ export class SnippetRepository extends Repository<Snippet> {
     const query = this.createQueryBuilder('snippet')
 
     if (tags) {
-      query.andWhere('snippet.tags = :tags', { tags })
+      // This query filter if any element of array matches array in db
+      query.andWhere('snippet.tags @> :tags', {
+        tags: tags.split(',')
+      })
     }
 
     if (search) {
@@ -29,6 +32,7 @@ export class SnippetRepository extends Repository<Snippet> {
       const snippets = await query.addOrderBy('id', 'DESC').take(size).getMany()
       return snippets
     } catch (error) {
+      console.error(error)
       throw new InternalServerErrorException()
     }
   }
@@ -42,9 +46,11 @@ export class SnippetRepository extends Repository<Snippet> {
 
     query.where('snippet.userId = :userId', { userId: user.id })
 
-    // TODO: Handle to search by multiple tags
     if (tags) {
-      query.andWhere('snippet.tags = :tags', { tags })
+      // This query filter if any element of array matches array in db
+      query.andWhere('snippet.tags @> :tags', {
+        tags: tags.split(',')
+      })
     }
 
     if (search) {
@@ -56,6 +62,10 @@ export class SnippetRepository extends Repository<Snippet> {
 
     try {
       const snippets = await query.getMany()
+
+      if (!snippets) {
+        return []
+      }
       return snippets
     } catch (error) {
       throw new InternalServerErrorException()
@@ -66,12 +76,13 @@ export class SnippetRepository extends Repository<Snippet> {
     createSnippetDto: CreateSnippetDto,
     user: User
   ): Promise<Snippet> {
-    const { title, description, snippetContentMD } = createSnippetDto
+    const { title, description, snippetContentMD, tags } = createSnippetDto
 
     const newSnippet = new Snippet()
     newSnippet.title = title
     newSnippet.description = description
     newSnippet.snippetContentMD = [...snippetContentMD]
+    newSnippet.tags = [...tags]
     newSnippet.user = user
 
     try {

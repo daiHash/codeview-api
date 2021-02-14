@@ -12,6 +12,7 @@ import {
   UsePipes,
   ValidationPipe
 } from '@nestjs/common'
+import { TagsService } from 'src/tags/tags.service'
 import { GetUser } from '../auth/get-user.decorator'
 import { User } from '../auth/user.entity'
 import { AuthenticatedGuard } from '../common/guards/authenticated.guard'
@@ -23,7 +24,10 @@ import { SnippetsService } from './snippets.service'
 
 @Controller('snippets')
 export class SnippetsController {
-  constructor(private snippetsService: SnippetsService) {}
+  constructor(
+    private snippetsService: SnippetsService,
+    private tagService: TagsService
+  ) {}
 
   @Get()
   @UseGuards(AuthenticatedGuard)
@@ -49,6 +53,13 @@ export class SnippetsController {
     @Body() createSnippetDto: CreateSnippetDto,
     @GetUser() user: User
   ): Promise<Snippet> {
+    const { tags } = createSnippetDto
+    if (tags.length > 0) {
+      tags.forEach(async (tag) => {
+        await this.tagService.createTag(tag)
+      })
+    }
+
     return this.snippetsService.createSnippet(createSnippetDto, user)
   }
 

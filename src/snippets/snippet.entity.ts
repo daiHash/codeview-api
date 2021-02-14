@@ -21,7 +21,6 @@ export class Snippet extends BaseEntity {
   @Column()
   description: string
 
-  // TODO: Think about the data here array or just string text
   @Column('text', { array: true })
   snippetContentMD: string[]
 
@@ -37,4 +36,7 @@ export class Snippet extends BaseEntity {
 
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: number
+
+  @Column('text', { array: true })
+  tags: string[]
 }
