@@ -10,4 +10,7 @@ export class CreateSnippetDto {
   @IsString({ each: true })
   @IsNotEmpty()
   snippetContentMD: string[]
+
+  @IsString({ each: true })
+  tags: string[]
 }

@@ -6,6 +6,7 @@ import { SnippetsModule } from './snippets/snippets.module'
 import typeOrmConfig from './config/typeorm.config'
 import { AppController } from './app.controller'
 import { PassportModule } from '@nestjs/passport'
+import { TagsModule } from './tags/tags.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { PassportModule } from '@nestjs/passport'
     }),
     PassportModule.register({ session: true }),
     AuthModule,
-    SnippetsModule
+    SnippetsModule,
+    TagsModule
   ],
   controllers: [AppController]
 })
