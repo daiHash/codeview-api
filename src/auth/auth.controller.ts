@@ -20,16 +20,19 @@ export class AuthController {
 
   @Get('current_user')
   getProfile(@Req() req: Request) {
-    if (req.user) {
-      const { username, avatarUrl, snippets, id } = req.user as User
-      const currentUser = {
-        id,
-        username,
-        avatarUrl,
-        snippets
-      }
-      return { isCurrentUser: !!req.user, ...currentUser }
+    if (!req.user) {
+      return { isCurrentUser: false }
     }
+
+    const { username, avatarUrl, snippets, id } = req.user as User
+    const currentUser = {
+      id,
+      username,
+      avatarUrl,
+      snippets
+    }
+
+    return { isCurrentUser: true, ...currentUser }
   }
 
   @Get('logout')
