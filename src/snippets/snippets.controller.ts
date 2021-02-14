@@ -12,7 +12,7 @@ import {
   UsePipes,
   ValidationPipe
 } from '@nestjs/common'
-import { TagsService } from 'src/tags/tags.service'
+import { TagsService } from '../tags/tags.service'
 import { GetUser } from '../auth/get-user.decorator'
 import { User } from '../auth/user.entity'
 import { AuthenticatedGuard } from '../common/guards/authenticated.guard'
