@@ -59,11 +59,12 @@ export class SnippetsService {
     createSnippetDto: Partial<CreateSnippetDto>
   ): Promise<Snippet> {
     const snippet = await this.getSnippetById(id, user)
-    const { title, description, snippetContentMD } = createSnippetDto
+    const { title, description, snippetContentMD, tags } = createSnippetDto
 
     if (title) snippet.title = title
     if (description) snippet.description = description
     if (snippetContentMD) snippet.snippetContentMD = [...snippetContentMD]
+    if (tags) snippet.tags = [...tags]
 
     const updatedSnippet = this.snippetRepository.create(snippet)
     const newSnippet = await this.snippetRepository.save(updatedSnippet)

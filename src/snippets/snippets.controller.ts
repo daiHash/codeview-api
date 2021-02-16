@@ -70,6 +70,12 @@ export class SnippetsController {
     @GetUser() user: User,
     @Body() createSnippetDto: CreateSnippetDto
   ): Promise<Snippet> {
+    const { tags } = createSnippetDto
+    if (tags.length > 0) {
+      tags.forEach(async (tag) => {
+        await this.tagService.createTag(tag)
+      })
+    }
     return this.snippetsService.updateSnippet(id, user, createSnippetDto)
   }
 
