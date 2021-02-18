@@ -71,6 +71,18 @@ export class SnippetsService {
     return newSnippet
   }
 
+  async updateSnippetFavorite(
+    id: number,
+    user: User,
+    { isFavorite }: { isFavorite: boolean }
+  ) {
+    const snippet = await this.getSnippetById(id, user)
+    snippet.isFavorite = isFavorite
+    const updatedSnippet = this.snippetRepository.create(snippet)
+    const newSnippet = await this.snippetRepository.save(updatedSnippet)
+    return newSnippet
+  }
+
   async deleteSnippet(id: number, user: User): Promise<void> {
     const result = await this.snippetRepository.delete({ id, userId: user.id })
 

@@ -87,4 +87,14 @@ export class SnippetsController {
   ): Promise<void> {
     return this.snippetsService.deleteSnippet(id, user)
   }
+
+  @Put('/:id/favorite')
+  @UseGuards(AuthenticatedGuard)
+  updateSnippetFavorite(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: User,
+    @Body() isFavorite: { isFavorite: boolean }
+  ): Promise<Snippet> {
+    return this.snippetsService.updateSnippetFavorite(id, user, isFavorite)
+  }
 }
