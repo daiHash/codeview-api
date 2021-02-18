@@ -20,9 +20,10 @@ async function bootstrap() {
   app.use(helmet())
 
   app.enableCors({
-    origin: [configService.get('CLIENT_BASE_URL')],
-    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
-    credentials: true
+    // origin: [configService.get('CLIENT_BASE_URL')],
+    origin: '*',
+    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'
+    // credentials: true
   })
 
   app.use(cookieParser())
