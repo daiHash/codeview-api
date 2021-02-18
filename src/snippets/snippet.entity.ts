@@ -39,4 +39,7 @@ export class Snippet extends BaseEntity {
 
   @Column('text', { array: true })
   tags: string[]
+
+  @Column({ default: false })
+  isFavorite: boolean
 }
