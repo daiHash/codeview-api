@@ -39,7 +39,7 @@ async function bootstrap() {
   if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1) // trust first proxy
     userSession.cookie.secure = true
-    userSession.cookie.sameSite = 'none'
+    userSession.cookie.sameSite = 'lax'
     userSession.proxy = true
   }
 
