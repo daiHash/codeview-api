@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  PROJECT_ID: 'code-snippet-memo'
+  PROJECT_ID: 'codeview'
   GCLOUD_SERVICE_KEY: ${{ secrets.GCLOUD_SERVICE_KEY }}
 
 jobs:

@@ -5,7 +5,7 @@ env_variables:
   # GOOGLE
   GOOGLE_CLIENT_ID: '958439612118-hsj5fiohvpru58f8ohijb130tufi3mi0.apps.googleusercontent.com'
   GOOGLE_SECRET: 'EByxENsCtT0dbFWwGmiC9SAH'
-  GOOGLE_CALLBACK_URL: 'https://code-snippet-memo.herokuapp.com/api/auth/google/callback'
+  GOOGLE_CALLBACK_URL: 'https://codeview.herokuapp.com/api/auth/google/callback'
   # DATABASE
   DATABASE_HOST: 'postgres://twoizwlpvdasjn:fcb962c84521f2deee8f1dad1a4822ce07c520c9bbdba6e43fd5f1890b7a9661@ec2-75-101-212-64.compute-1.amazonaws.com:5432/d9mlrofi63pgkr'
   DATABASE_PORT: 5432
