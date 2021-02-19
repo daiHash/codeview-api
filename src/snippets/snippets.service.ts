@@ -77,7 +77,15 @@ export class SnippetsService {
     { isFavorite }: { isFavorite: boolean }
   ) {
     const snippet = await this.getSnippetById(id, user)
-    snippet.isFavorite = isFavorite
+    const { favorites } = snippet
+
+    if (!isFavorite) {
+      const userIndex = favorites.findIndex((f) => f.userId === user.id)
+      favorites.splice(userIndex, 1)
+    } else {
+      favorites.push({ userId: user.id, username: user.username })
+    }
+
     const updatedSnippet = this.snippetRepository.create(snippet)
     const newSnippet = await this.snippetRepository.save(updatedSnippet)
     return newSnippet

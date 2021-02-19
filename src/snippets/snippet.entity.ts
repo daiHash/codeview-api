@@ -40,6 +40,6 @@ export class Snippet extends BaseEntity {
   @Column('text', { array: true })
   tags: string[]
 
-  @Column({ default: false })
-  isFavorite: boolean
+  @Column('jsonb', { default: [] })
+  favorites: Array<{ userId: number; username: string }>
 }
