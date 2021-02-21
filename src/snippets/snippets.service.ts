@@ -26,6 +26,9 @@ export class SnippetsService {
   ): Promise<Snippet[]> {
     return this.snippetRepository.getSnippets(filterDto, user)
   }
+  async getFavoriteSnippets(user: User): Promise<Snippet[]> {
+    return this.snippetRepository.getFavoriteSnippets(user)
+  }
 
   async getSnippetById(id: number, user: User): Promise<SnippetByID> {
     const snippetQueryData = { id }

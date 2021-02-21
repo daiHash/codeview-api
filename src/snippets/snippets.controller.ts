@@ -38,6 +38,12 @@ export class SnippetsController {
     return this.snippetsService.getSnippets(filterDto, user)
   }
 
+  @Get('/favorites')
+  @UseGuards(AuthenticatedGuard)
+  getFavoriteSnippets(@GetUser() user: User): Promise<Snippet[]> {
+    return this.snippetsService.getFavoriteSnippets(user)
+  }
+
   @Get('/:id')
   getSnippetById(
     @Param('id', ParseIntPipe) id: number,

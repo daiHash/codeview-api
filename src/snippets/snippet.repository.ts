@@ -72,6 +72,29 @@ export class SnippetRepository extends Repository<Snippet> {
     }
   }
 
+  async getFavoriteSnippets(user: User): Promise<Snippet[]> {
+    const query = this.createQueryBuilder('snippet')
+
+    query.andWhere(
+      `snippet.id IN (SELECT t.id FROM "snippet" t, jsonb_array_elements(t.favorites) p where (p->>'userId')::int = :userId)`,
+      {
+        userId: user.id
+      }
+    )
+
+    try {
+      const snippets = await query.getMany()
+
+      if (!snippets) {
+        return []
+      }
+      return snippets
+    } catch (error) {
+      console.error(error)
+      throw new InternalServerErrorException()
+    }
+  }
+
   async createSnippet(
     createSnippetDto: CreateSnippetDto,
     user: User
