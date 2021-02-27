@@ -103,4 +103,14 @@ export class SnippetsController {
   ): Promise<Snippet> {
     return this.snippetsService.updateSnippetFavorite(id, user, isFavorite)
   }
+
+  // Remove after clearing just for debug
+  @Put('/:id/clear/favorite')
+  @UseGuards(AuthenticatedGuard)
+  clearFavoriteSnippets(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: User
+  ) {
+    return this.snippetsService.clearLikes(id, user)
+  }
 }
