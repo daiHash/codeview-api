@@ -9,9 +9,12 @@ export default () => ({
     database: process.env.DATABASE_NAME,
     entities: [__dirname + '/../**/*.entity.{js,ts}'],
     synchronize: true,
-    ssl:
-      process.env.NODE_ENV === 'production'
-        ? { rejectUnauthorized: false }
-        : false
+    ssl: process.env.NODE_ENV === 'production' ? true : false,
+    extra: {
+      ssl:
+        process.env.NODE_ENV === 'production'
+          ? { rejectUnauthorized: false }
+          : false
+    }
   }
 })
