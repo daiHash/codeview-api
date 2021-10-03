@@ -12,6 +12,8 @@ $ yarn install
 
 ## Running the app
 
+### Before running the dev-server, create and add the db and other env vars in a `.env` file use `sample.env` as reference
+
 ```bash
 # development
 $ yarn start
@@ -23,7 +25,7 @@ $ yarn start:dev
 $ yarn start:prod
 ```
 
-## Test
+## Test(WIP)
 
 ```bash
 # unit tests
