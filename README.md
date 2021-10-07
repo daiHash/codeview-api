@@ -2,7 +2,7 @@
 
 ## Description
 
-Save any code snippet that you have used and keep and access it easily as a memo.
+Save any code snippet that users have used and keep and access it easily as a memo.
 
 ## Installation
 
