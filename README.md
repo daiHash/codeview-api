@@ -13,6 +13,7 @@ Codeview is a web application where you can save any code snippet that users hav
 <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
 <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" />
 <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" />
+<img src="https://img.shields.io/badge/Typeorm-316192?style=for-the-badge&logoColor=white" />
 </details>
 
 ## Installation
