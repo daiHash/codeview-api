@@ -3,7 +3,6 @@
   <span>CodeView API</span>
 </h1>
 
-## Project Overview
 Codeview is a web application where you can save any code snippet that users have used; keep and access it easily as a memo. RESTful API for codeview
 
 <details open>
