@@ -49,7 +49,7 @@ async function bootstrap() {
   app.use(passport.initialize())
   app.use(passport.session())
 
-  const port = configService.get('PORT') || 3000
+  const port = process.env.PORT || 3000
   await app.listen(port, '0.0.0.0', () => {
     console.log(`Listening at http://localhost:${port}`)
   })
